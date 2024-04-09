@@ -17,33 +17,34 @@ themeButton.addEventListener('click', () => {
     isDark = !isDark;
 })
 
-
 function ButtonAction(button) {
-    if(!(checkIfLastLetterIsOperator(button) && checkIfIsOperatorClass(button)) || button.id == "backspace"){
-        if (button.id == 'clear') {
-            display.innerText = '';
-        } else if (button.id == 'backspace') {
-            removeLastLetter();
-        } else if (display.innerText != '' && button.id == 'equal') {
-            if(checkIfLastLetterIsOperator(button)) {
+    if(!(checkIfLastLetterIsOperator(button) && checkIfIsOperatorClass(button)) || button.id == "backspace" || button.id == "clear"){
+        if(!(display.innerText == '' && checkIfIsOperatorClass(button))){
+            if (button.id == 'clear') {
+                display.innerText = '';
+            } else if (button.id == 'backspace') {
                 removeLastLetter();
+            } else if (display.innerText != '' && button.id == 'equal') {
+                if(checkIfLastLetterIsOperator(button)) {
+                    removeLastLetter();
+                }
+                 let value = eval(display.innerText);
+                 let valueFloat = parseFloat(value);    
+                 if(!Number.isInteger(valueFloat)){
+                    display.innerText = valueFloat.toFixed(2).toString();
+                 }else{
+                    display.innerText = valueFloat.toString();
+                 }
+                 
+            } else if (display.innerText == '' && button.id == 'equal') {
+                if(checkIfLastLetterIsOperator(button)) {
+                    removeLastLetter();
+                }
+                display.innerText = 'Empty!';
+                setTimeout(() => (display.innerText = ''), 2000);
+            } else {
+                display.innerText += button.id;
             }
-             let value = eval(display.innerText);
-             let valueFloat = parseFloat(value);    
-             if(!Number.isInteger(valueFloat)){
-                display.innerText = valueFloat.toFixed(2).toString();
-             }else{
-                display.innerText = valueFloat.toString();
-             }
-             
-        } else if (display.innerText == '' && button.id == 'equal') {
-            if(checkIfLastLetterIsOperator(button)) {
-                removeLastLetter();
-            }
-            display.innerText = 'Empty!';
-            setTimeout(() => (display.innerText = ''), 2000);
-        } else {
-            display.innerText += button.id;
         }
     }
 }
