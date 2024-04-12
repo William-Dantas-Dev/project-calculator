@@ -104,6 +104,10 @@ button#equal{
     height: 130px;
 }
 
+button.zero{
+    width: 130px;
+}
+
 /* Light Theme */
 
 .claculator {
